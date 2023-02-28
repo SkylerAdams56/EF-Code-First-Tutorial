@@ -21,7 +21,7 @@ namespace EF_Code_First_Tutorial.Models
         [Column(TypeName = "decimal(9,2)")]
         public decimal Sales { get; set; }
         public bool Active { get; set; } = true;
-
+        public virtual ICollection<Order> Orders { get; set; }
         public Customer() { }
     }
 }
