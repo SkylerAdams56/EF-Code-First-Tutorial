@@ -1,26 +1,50 @@
-﻿using EF_Code_First_Tutorial;
-using Microsoft.EntityFrameworkCore;
+﻿
+using EF_Code_First_Tutorial.Controllers;
 
-var _context = new SalesDbContext();
+var custCtrl = new CustomersController();
 
-
-
-var customer = _context.Customers.Include(x => x.Orders)
-                                 .ThenInclude(x => x.OrderLines)
-                                 .ThenInclude(x => x.Item)
-                                 .Single(x => x.Id == 1);
-
+var customer = await custCtrl.GetCustomerWithOrders(1);
 
 Console.WriteLine($"CUSTOMER: {customer.Name}");
-foreach(var ord in customer.Orders)
+foreach (var ord in customer.Orders)
 {
     Console.WriteLine($"- ORDER: Description {ord.Description}");
-    foreach(var ol in ord.OrderLines)
+    foreach (var ol in ord.OrderLines)
     {
         Console.WriteLine($"-- ORDERLINE: Product: {ol.Item.Name}, Quantity: {ol.Quantity}, " +
                   $"Price: {ol.Item.Price:C}, Line Total: {ol.Quantity * ol.Item.Price:C}");
     }
 }
+
+
+
+
+
+
+
+//using EF_Code_First_Tutorial;
+//using Microsoft.EntityFrameworkCore;
+
+//var _context = new SalesDbContext();
+
+
+
+//var customer = _context.Customers.Include(x => x.Orders)
+//                                 .ThenInclude(x => x.OrderLines)
+//                                 .ThenInclude(x => x.Item)
+//                                 .Single(x => x.Id == 1);
+
+
+//Console.WriteLine($"CUSTOMER: {customer.Name}");
+//foreach(var ord in customer.Orders)
+//{
+//    Console.WriteLine($"- ORDER: Description {ord.Description}");
+//    foreach(var ol in ord.OrderLines)
+//    {
+//        Console.WriteLine($"-- ORDERLINE: Product: {ol.Item.Name}, Quantity: {ol.Quantity}, " +
+//                  $"Price: {ol.Item.Price:C}, Line Total: {ol.Quantity * ol.Item.Price:C}");
+//    }
+//}
 
 //_context.Customers.ToList().ForEach(c => Console.WriteLine(c.Name));
 
