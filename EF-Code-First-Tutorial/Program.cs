@@ -5,7 +5,8 @@ var custCtrl = new CustomersController();
 
 var customer = await custCtrl.GetCustomerWithOrders(1);
 
-Console.WriteLine($"CUSTOMER: {customer.Name}");
+
+Console.WriteLine($"CUSTOMER: {customer!.Name}");
 foreach (var ord in customer.Orders)
 {
     Console.WriteLine($"- ORDER: Description {ord.Description}");
